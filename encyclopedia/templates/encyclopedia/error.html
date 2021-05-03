@@ -1,0 +1,21 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+{{ error }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ error }}</h1>
+
+    <div>
+        {{ error_message }}
+        {% if not entries == null %}
+        <br><br>
+        <ul style="color:dodgerblue">
+            {% for entry in entries %}
+                <li><a href="/wiki/{{ entry }}">{{ entry }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

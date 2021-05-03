@@ -1,0 +1,29 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if title == null %}
+    Create New Page
+    {% else %}
+    Edit Page
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    {% if title == null %}
+    <h1>Create New Page</h1>
+    {% else %}
+    <h1>Edit Page</h1>
+    {% endif %}
+    <form action="/save">
+        <label for="title">Page Title:</label>
+        {% if title == null %}
+        <input type="text" name="new_title" placeholder="Title" id="new_title">
+        {% else %}
+        <input type="text" name="edit_title" placeholder="Title" id="edit_title" value="{{ title }}" readonly="true">
+        {% endif %}
+        <br><label for="content">Content:</label><br>
+        <textarea id="content" name="content" placeholder="Text" style="height:600px;width:600px">{{ content }}</textarea>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
