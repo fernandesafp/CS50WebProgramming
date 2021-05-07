@@ -1,0 +1,36 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block body %}
+{% if user.is_authenticated %}
+<div class="border" id="new-post">
+    <h3>New Post</h3>
+    <form>
+        <div class="form-group">
+            <textarea class="form-control" id="text" placeholder="Write something..."></textarea>
+        </div>
+        <input class="btn btn-primary" type="button" id="publish" value="Post">
+    </form>
+    <div id="message"></div>
+</div>
+{% endif %}
+
+<div id="profile-view">
+    <div class="border" id="profile">
+        <div class="row">
+            <div class="col">
+                <h3 id="username"></h3>
+            </div>
+            <div class="col">
+                <button id="follow-button"></button>
+            </div>
+        </div>
+        <div id="user-follows-message">Follows you</div>
+        <div id="user-followers"></div>
+        <div id="user-following"></div>
+    </div>
+</div>
+
+<div id="posts-view">
+</div>
+{% endblock %}

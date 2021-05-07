@@ -1,0 +1,39 @@
+textarea {
+    min-height: 75px;
+    resize: none;
+}
+
+.border {
+    width: 50%;
+    padding: 20px;
+    margin: 10px;
+}
+
+#message {
+    color: red;
+    font-size: 11px;
+}
+
+#posts-view {
+    padding: 20px;
+}
+
+#posts-view > h3 {
+    margin-left: 20px;
+}
+
+hr {
+    width: 50%;
+    margin: 10px;
+}
+
+#follow-button {
+    float: right;
+}
+
+#user-follows-message {
+    border: 1px solid darkgray;
+    background-color:lightgray;
+    color: black;
+    width: 87px;
+}
