@@ -42,7 +42,7 @@ python manage.py runserver
 ```
 By going to [http://127.0.0.1:8000/](http://127.0.0.1:8000/) the login page should be visible:
 
-<img src="/images/main-page.png" style="width:500px;" alt="Main page">
+<img src="./images/main-page.png" style="width:500px;" alt="Main page">
 
 You can now create an account and use the web app.
 
@@ -74,4 +74,4 @@ The project follows the structure:
 
 ### Views
 
-<img src="/images/all-pages.gif">
+<img src="./images/all-pages.gif">
