@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: sans-serif;
+}
+
+.top_navbar {
+  background: #0062cc;
+  height: 60px;
+  display: flex;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 500;
+}
+
+.top_navbar .hamburger {
+  width: 80px;
+  background: #0062cc;
+  position: relative;
+  font-size: 28px;
+}
+
+.top_navbar .hamburger .hamburger__inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  width: 40px;
+  height: 20px;
+}
+
+.top_navbar .hamburger__inner>div {
+  width: 30px;
+  height: 2px;
+  background: white;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.top_navbar .hamburger div.two {
+  top: 10px;
+}
+
+.top_navbar .hamburger div.three {
+  top: 20px;
+}
+
+#welcome {
+  width: calc(100% - 80px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.main_container .sidebar {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 225px;
+  height: 100%;
+  background: #0062cc;
+  transition: all 0.3s ease;
+}
+
+.main_container .sidebar .sidebar__inner {
+  position: relative;
+}
+
+.main_container .sidebar .profile {
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 20px 0;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.main_container .col {
+  margin-top: 60px;
+  margin-left: 225px;
+  padding: 30px;
+  transition: all 0.3s ease;
+}
+
+.main_container .sidebar ul li a {
+  color: white;
+  font-size: 18px;
+  padding: 20px 30px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1px;
+  transition: all 0.3s ease;
+}
+
+.main_container .sidebar ul li a .icon {
+  margin-right: 15px;
+  font-size: 28px;
+}
+
+.main_container .sidebar ul li a span {
+  display: inline-block;
+}
+
+.main_container .sidebar ul li a:hover,
+.main_container .sidebar ul li a.active {
+  background: white;
+  text-decoration: none;
+  color: #0062cc;
+}
+
+.wrapper.active .sidebar {
+  width: 80px;
+}
+
+.wrapper.active .sidebar ul li a span.title,
+.wrapper.active .profile_info {
+  display: none;
+}
+
+.wrapper.active .main_container .col {
+  margin-left: 80px;
+}

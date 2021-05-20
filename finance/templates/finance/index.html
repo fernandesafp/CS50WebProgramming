@@ -1,0 +1,398 @@
+{% extends "finance/layout.html" %} {% load static %} {% block sources %}
+<link href="{% static 'finance/sidebar.css' %}" rel="stylesheet" />
+<link href="{% static 'finance/index.css' %}" rel="stylesheet" />
+<script src="{% static 'finance/index.js' %}"></script>
+<script src="https://kit.fontawesome.com/f6c177697b.js" crossorigin="anonymous"></script>
+{% endblock %} {% block body %}
+<div class="wrapper">
+    <!--Top navigation bar menu-->
+    <div class="top_navbar">
+        <!--Hamburger button-->
+        <div class="hamburger">
+            <div class="hamburger__inner">
+                <div class="one"></div>
+                <div class="two"></div>
+                <div class="three"></div>
+            </div>
+        </div>
+        <!--Top row-->
+        <div id="welcome">
+            Welcome{% if user.first_name %}, {{user.first_name}}{% endif %}
+        </div>
+    </div>
+    <div class="main_container">
+        <!--Sidebar-->
+        <div class="sidebar">
+            <div class="sidebar__inner">
+                <ul>
+                    <li>
+                        <a class="sidebar-option">
+                            <span class="icon"><i class="fas fa-car"></i></span>
+                            <span class="title">Vehicles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-option">
+                            <span class="icon"><i class="fas fa-coins"></i></span>
+                            <span class="title">Transactions</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-option">
+                            <span class="icon"><i class="fas fa-tasks"></i></span>
+                            <span class="title">Tasks</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-option">
+                            <span class="icon"><i class="fas fa-address-book"></i></span>
+                            <span class="title">Contacts</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-option">
+                            <span class="icon"><i class="fas fa-address-card"></i></span>
+                            <span class="title">Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="sidebar-option">
+                            <span class="icon"><i class="fas fa-question-circle"></i></span>
+                            <span class="title">About</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'signout' %}">
+                            <span class="icon"><i class="fas fa-sign-out-alt"></i></span>
+                            <span class="title">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--Working container-->
+        <div class="col border" id="main-container">
+            <!--Vehicles-->
+            <div class="row" id="vehicles">
+                <h1>Vehicles</h1>
+                <!--Navigation tab-->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Garage</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Sold</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">New vehicle</a>
+                    </li>
+                </ul>
+                <br />
+                <div id="garage">
+                </div>
+                <div id="sold">
+                </div>
+                <form id="new-vehicle" onsubmit="event.preventDefault(); add_vehicle()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label to="vehicle-brand">Make: *</label>
+                        <input class="form-control" type="text" id="vehicle-brand" list="vehicle-makes" placeholder="Select a vehicle make" onchange="">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-model">Model:</label>
+                        <input class="form-control" type="text" id="vehicle-model" placeholder="Select a vehicle model">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-mileage">Mileage:</label>
+                        <input class="form-control" type="number" id="vehicle-mileage" placeholder="Mileage">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-year">Year:</label>
+                        <input class="form-control" type="number" id="vehicle-year" placeholder="yyyy">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-plate">Plate:</label>
+                        <input class="form-control" type="text" id="vehicle-plate" placeholder="__-__-__">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-contact">Seller: *</label>
+                        <input class="form-control" id="vehicle-contact" list="contact-list" placeholder="Select a contact">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-cost">Cost: *</label>
+                        <input class="form-control" type="number" id="vehicle-cost" placeholder="Cost">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-value">Value:</label>
+                        <input class="form-control" type="number" id="vehicle-value" placeholder="Value">
+                    </div>
+                    <div class="form-group">
+                        <label to="vehicle-notes">Notes:</label>
+                        <textarea class="form-control" form="new-vehicle" id="vehicle-notes"
+                            placeholder="Notes"></textarea>
+                    </div>
+                    <div class="form-group" id="new-vehicle-button">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="" role="status" aria-hidden="true">Add vehicle</span>
+                        </button>
+                        <label id="new-vehicle-label"></label>
+                    </div>
+                </form>
+            </div>
+            <!--Transactions-->
+            <div class="row" id="transactions">
+                <h1>Transactions</h1>
+                <!--Navigation tab-->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Cash flow</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">New transaction</a>
+                    </li>
+                </ul>
+                <br />
+                <!--Cash flow-->
+                <div id="cash-flow">
+                </div>
+                <!--Add new transaction-->
+                <form id="new-transaction" onsubmit="event.preventDefault(); add_transaction()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label to="transaction-type">Type: *</label>
+                        <select class="form-control" id="transaction-type">
+                        <option value="" disabled selected>Select transaction type *</option>
+                        <option value="EXP">Expense</option>
+                        <option value="SEL">Selling</option>
+                        <option value="SER">Service</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label to="transaction-value">Value: *</label>
+                        <input class="form-control" type="number" id="transaction-value" placeholder="Value *">
+                    </div>
+                    <div class="form-group">
+                        <label to="transaction-contact">Contact:</label>
+                        <input class="form-control" id="transaction-contact" list="contact-list" placeholder="Select a contact">
+                    </div>
+                    <div class="form-group">
+                        <label to="transaction-vehicle">Vehicle:</label>
+                        <input class="form-control" id="transaction-vehicle" list="vehicle-list" placeholder="Select a vehicle">
+                    </div>
+                    <div class="form-group">
+                        <label to="transaction-description">Description:</label>
+                        <input type="text" class="form-control" id="transaction-description" placeholder="Description" />
+                    </div>
+                    <div class="form-group" id="new-transaction-button">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="" role="status" aria-hidden="true">Add transaction</span>
+                        </button>
+                        <label id="new-transaction-label"></label>
+                    </div>
+                </form>
+            </div>
+            <!--Tasks-->
+            <div class="row" id="tasks">
+                <h1>Tasks</h1>
+                <!--Navigation tab-->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">To do</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Done</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">New task</a>
+                    </li>
+                </ul>
+                <br />
+                <!--Show to do task list-->
+                <div id="to-do">
+                </div>
+                <!--Show completed tasks-->
+                <div id="done">
+                </div>
+                <!--Add new task-->
+                <form id="new-task" onsubmit="event.preventDefault(); add_task()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label to="task-name">Task: *</label>
+                        <input type="text" class="form-control" id="task-name" placeholder="Task *" />
+                    </div>
+                    <div class="form-group">
+                        <label to="task-contact">Contact:</label>
+                        <input class="form-control" id="task-contact" list="contact-list" placeholder="Select a contact">
+                    </div>
+                    <div class="form-group">
+                        <label to="task-vehicle">Vehicle:</label>
+                        <input class="form-control" id="task-vehicle" list="vehicle-list" placeholder="Select a vehicle">
+                    </div>
+                    <div class="form-group" id="new-task-button">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="" role="status" aria-hidden="true">Add task</span>
+                        </button>
+                        <label id="new-task-label"></label>
+                    </div>
+                </form>
+            </div>
+            <!--Contacts-->
+            <div class="row" id="contacts">
+                <h1>Contacts</h1>
+                <!--Navigation tab-->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">List</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">New contact</a>
+                    </li>
+                </ul>
+                <br />
+                <!--Show contact list-->
+                <div class="grid-container" id="list">
+                </div>
+                <!--Add new contact-->
+                <form id="new-contact" onsubmit="event.preventDefault(); add_contact()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label to="contact-name">Name: *</label>
+                        <input type="text" class="form-control" id="contact-name" placeholder="Name *" />
+                    </div>
+                    <div class="form-group">
+                        <label to="contact-phone">Phone:</label>
+                        <input type="text" class="form-control" id="contact-phone" placeholder="Phone" />
+                    </div>
+                    <div class="form-group">
+                        <label to="contact-email">E-mail:</label>
+                        <input type="text" class="form-control" id="contact-email" placeholder="E-mail" />
+                    </div>
+                    <div class="form-group">
+                        <label to="contact-address">Address:</label>
+                        <textarea class="form-control" form="new-contact" id="contact-address"
+                            placeholder="Address"></textarea>
+                    </div>
+                    <div class="form-group" id="new-contact-button">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="" role="status" aria-hidden="true">Add contact</span>
+                        </button>
+                        <label id="new-contact-label"></label>
+                    </div>
+                </form>
+            </div>
+            <!--Profile-->
+            <div class="row" id="profile">
+                <h1>Profile</h1>
+                <!--Navigation tab-->
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Update details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Change password</a>
+                    </li>
+                </ul>
+                <br />
+                <!--Update user details-->
+                <form id="update-details" onsubmit="event.preventDefault(); update_details()">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label to="username">Username:</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username"
+                            value="{{user.username}}" disabled />
+                    </div>
+                    <div class="form-group">
+                        <label to="first_name">First name:</label>
+                        <input type="text" class="form-control" id="first_name" placeholder="First name"
+                            value="{{user.first_name}}" />
+                    </div>
+                    <div class="form-group">
+                        <label to="last_name">Last name:</label>
+                        <input type="text" class="form-control" id="last_name" placeholder="Last name"
+                            value="{{user.last_name}}" />
+                    </div>
+                    <div class="form-group">
+                        <label to="email">E-mail:</label>
+                        <input type="text" class="form-control" id="email" placeholder="E-mail"
+                            value="{{user.email}}" />
+                    </div>
+                    <div class="form-group" id="update-details-button">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="" role="status" aria-hidden="true">Update</span>
+                        </button>
+                        <label id="update-details-label"> </label>
+                    </div>
+                </form>
+                <!--Change password-->
+                <form id="change-password" onsubmit="event.preventDefault(); update_password()">
+                    <div class="form-group">
+                        <label to="password">Current password: *</label>
+                        <input type="password" class="form-control" id="password" placeholder="Current password *" />
+                    </div>
+                    <div class="form-group">
+                        <label to="new_password">New password: *</label>
+                        <input type="password" class="form-control" id="new_password" placeholder="New password *" />
+                    </div>
+                    <div class="form-group">
+                        <label to="new_confirmation">Confirm new password: *</label>
+                        <input class="form-control" type="password" id="new_confirmation"
+                            placeholder="Confirm new password *" />
+                    </div>
+                    <div class="form-group" id="update-password-button">
+                        <button class="btn btn-primary" type="submit">
+                            <span class="" role="status" aria-hidden="true">Update</span>
+                        </button>
+                        <label id="update-password-label"> </label>
+                    </div>
+                </form>
+            </div>
+            <!--About-->
+            <div class="row" id="about">
+                <h1>About</h1>
+                <hr />
+                <h4>Developed by:</h4>
+                <br />
+                <div>
+                    <img id="about-me-photo" class="rounded-circle" src="https://github.com/fernandesafp.png"
+                        alt="André Fernandes" />
+                </div>
+                <div>
+                    <h5 class="card-title">
+                        André Fernandes
+                        <label class="fas fa-map-marker-alt" style="font-size: 16px">
+                            Funchal, Portugal</label>
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">MSc Engineering Physics</h6>
+                    <h6>
+                        <a href="https://www.linkedin.com/in/fernandesafp/" class="card-link fab fa-linkedin"
+                            target="_blank" rel="noopener noreferrer">/in/fernandesafp</a>
+                    </h6>
+                    <h6>
+                        <a href="https://github.com/fernandesafp/" class="card-link fab fa-github" target="_blank"
+                            rel="noopener noreferrer">/fernandesafp</a>
+                    </h6>
+                </div>
+                <br />
+                <br />
+                <h6>
+                    Auto Sales Tracker was developed for the final project for Harvard's
+                    <a href="https://www.edx.org/course/cs50s-web-programming-with-python-and-javascript"
+                        target="_blank" rel="noopener noreferrer">CS50's Web Programming with Python and Javascript</a>.
+                </h6>
+                <h6>
+                    Found a bug or have a sugestion? Send it to:
+                    <a href="mailto:fernandesafp@gmail.com?subject=Auto Sales question" target="_blank"
+                        rel="noopener noreferrer">fernandesafp@gmail.com</a>
+                </h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+<datalist id="vehicle-makes">
+</datalist>
+<datalist id="contact-list">
+</datalist>
+<datalist id="vehicle-list">
+</datalist>
+{% endblock %}

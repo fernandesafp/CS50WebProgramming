@@ -1,0 +1,73 @@
+{% extends "finance/layout.html" %} {% load static %} {% block sources %}
+<link href="{% static 'finance/login.css' %}" rel="stylesheet" />
+<script src="{% static 'finance/login.js' %}"></script>
+{% endblock %} {% block title %} - Login {% endblock %} {% block body %}
+<div class="container login-container">
+  <div class="row">
+    <!--Top message-->
+    <div class="col-12 rounded-top welcome-message">
+      <h2>Auto Sales Tracker</h2>
+      <h3>Auto Sales Tracker provides an organised dealership business.</h3>
+    </div>
+    <!--Login-->
+    <div class="col-lg-6 col-md-12 rounded-bottom login-form">
+      <h3>Login</h3>
+      <form action="{% url 'signin' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="text" class="form-control" name="username" placeholder="Username" value="" />
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" placeholder="Password" value="" />
+        </div>
+        <div class="form-group" id="login-button-div">
+          <button class="button-submit" type="submit">
+            <span class="" role="status" aria-hidden="true">Login</span>
+          </button>
+          {% if login_message %}
+          <label style="color: rgb(180, 4, 4)"> {{login_message}} </label>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          Forgot password? <a href="/accounts/password_reset/">Click here!</a>
+        </div>
+      </form>
+    </div>
+    <!--Register-->
+    <div class="col-lg-6 col-md-12 rounded-bottom register-form">
+      <h3>Create an account</h3>
+      <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="row">
+          <div class="form-group col">
+            <input type="text" class="form-control" name="first_name" placeholder="First name" value="" />
+          </div>
+          <div class="form-group col">
+            <input type="text" class="form-control" name="last_name" placeholder="Last name" value="" />
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="username" placeholder="Username *" value="" />
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name="email" placeholder="E-mail" value="" />
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" placeholder="Password *" value="" />
+        </div>
+        <div class="form-group">
+          <input class="form-control" type="password" name="confirmation" placeholder="Confirm password *" />
+        </div>
+        <div class="form-group" id="register-button-div">
+          <button class="button-submit" type="submit">
+            <span class="" role="status" aria-hidden="true">Register</span>
+          </button>
+          {% if register_message %}
+          <label style="color: rgb(206, 86, 86)"> {{register_message}} </label>
+          {% endif %}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

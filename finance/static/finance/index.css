@@ -1,0 +1,16 @@
+form {
+  max-width: 500px;
+}
+#about-me-photo {
+  width: 9rem;
+  float: left;
+  margin-right: 5px;
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
